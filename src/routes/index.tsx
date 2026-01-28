@@ -1,16 +1,11 @@
 import { createRoute } from '@tanstack/react-router'
 import { RootRoute } from './__root'
+import Dashboard from 'components/Dashboard'
 
-export const indexRoute = createRoute({
+export const Route = createRoute({
   getParentRoute: () => RootRoute,
   path: '/',
-  component: function Index() {
-    return (
-      <div className="p-2">
-        <h3>Welcome Home!</h3>
-      </div>
-    )
-  },
+  component: Dashboard,
 })
 
-export default indexRoute
+export default Route

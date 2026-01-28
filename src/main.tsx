@@ -1,11 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 import 'index.css'
-import { createRouter, RouterProvider } from '@tanstack/react-router'
-
-import { RootRoute } from 'routes/__root'
-import { indexRoute } from 'routes'
-import { aboutRoute } from 'routes/about'
+import { RouterProvider } from '@tanstack/react-router'
+import { theme } from 'config/theme'
+import { router } from 'routes/router'
 
 declare module '@tanstack/react-router' {
   interface Register {
@@ -13,14 +13,11 @@ declare module '@tanstack/react-router' {
   }
 }
 
-const routeTree = RootRoute.addChildren([indexRoute, aboutRoute])
-
-export const router = createRouter({
-  routeTree,
-})
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </StrictMode>
 )
