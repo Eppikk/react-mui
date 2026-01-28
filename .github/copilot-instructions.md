@@ -69,7 +69,18 @@ import type { User } from 'types/user' // src/types/*
 - TSX files use `.tsx` extension explicitly in imports
 - Entry point is [src/main.tsx](src/main.tsx) with `createRoot` API
 
+### Routing (TanStack Router)
+
+- Create route files in `src/routes/` directory
+- Each route uses `createRoute` and exports the route definition
+- **CRITICAL**: After creating a new route, you MUST add it to the `routeTree` in [src/routes/router.tsx](src/routes/router.tsx) for full type safety
+- Import the new route and add to `RootRoute.addChildren([...])` array
+- Example: `import { myRoute } from 'routes/myRoute'` then add `myRoute` to the children array
+- Failing to register routes breaks type inference and autocompletion
+
 ## File Structure
+
+### Standard Folder Organization
 
 ```
 src/
@@ -77,12 +88,107 @@ src/
   App.tsx            # Root component
   App.css            # Global styles (prefer MUI sx prop for new code)
   index.css          # CSS reset and base styles
-  components/        # Reusable UI components (import from 'components/*')
-  hooks/             # Custom React hooks (import from 'hooks/*')
-  utils/             # Helper functions (import from 'utils/*')
-  types/             # TypeScript types/interfaces (import from 'types/*')
-  assets/            # Static assets (images, fonts, etc.)
+
+  components/        # Reusable UI components
+    Dashboard.tsx
+    Navbar.tsx
+    common/          # Shared/generic components
+      Button.tsx
+      Modal.tsx
+    layout/          # Layout components
+      Header.tsx
+      Sidebar.tsx
+      Footer.tsx
+
+  hooks/             # Custom React hooks
+    useAuth.ts
+    useLocalStorage.ts
+    useFetch.ts
+
+  api/               # API client and service layer
+    client.ts        # Base API client configuration (axios/fetch)
+    services/        # API service modules
+      auth.ts
+      users.ts
+      products.ts
+
+  config/            # Configuration files
+    theme.ts         # MUI theme configuration
+    constants.ts     # App-wide constants
+    env.ts           # Environment variables
+
+  utils/             # Helper functions and utilities
+    formatDate.ts
+    validators.ts
+    storage.ts
+
+  types/             # TypeScript types/interfaces
+    user.ts
+    api.ts
+    common.ts
+
+  routes/            # Route definitions (TanStack Router)
+    __root.tsx
+    index.tsx
+    about.tsx
+
+  assets/            # Static assets
+    images/
+    fonts/
+    icons/
 ```
+
+### Folder Guidelines
+
+**components/** - UI components organized by feature or type
+
+- Export components as default: `export default function Dashboard() {}`
+- Use PascalCase for component files: `MyComponent.tsx`
+- Group related components in subfolders: `components/auth/LoginForm.tsx`
+- Common/shared components go in `components/common/`
+- Layout components (Header, Sidebar, Footer) go in `components/layout/`
+
+**hooks/** - Custom React hooks following naming convention
+
+- Prefix with `use`: `useAuth.ts`, `useDebounce.ts`
+- Export as named export: `export function useAuth() {}`
+- One hook per file unless tightly coupled
+- Import: `import { useAuth } from 'hooks/useAuth'`
+
+**api/** - Centralized API layer
+
+- `api/client.ts` - Base HTTP client setup (axios instance, interceptors)
+- `api/services/` - API methods grouped by domain/resource
+- Return typed responses: `Promise<User>`, `Promise<Product[]>`
+- Handle errors consistently in client or services
+- Example: `import { getUsers } from 'api/services/users'`
+
+**config/** - Configuration and setup files
+
+- `theme.ts` - MUI theme customization (colors, typography, components)
+- `constants.ts` - App constants (API URLs, feature flags, enums)
+- `env.ts` - Environment variable helpers and validation
+- Export const objects: `export const theme = createTheme({...})`
+
+**utils/** - Pure utility functions
+
+- Small, reusable helpers that don't depend on React
+- Export named functions: `export function formatCurrency(value: number) {}`
+- Keep functions focused and testable
+- Examples: formatters, validators, converters, parsers
+
+**types/** - TypeScript type definitions
+
+- Organize by domain: `user.ts`, `product.ts`, `api.ts`
+- Use interfaces for objects: `export interface User {}`
+- Use types for unions/intersections: `export type Status = 'active' | 'inactive'`
+- Common/shared types in `types/common.ts`
+
+**routes/** - Route components (TanStack Router)
+
+- File-based routing: `__root.tsx`, `index.tsx`, `about.tsx`
+- Each route exports a route definition
+- Import components from `components/` for route content
 
 ## Common Gotchas
 

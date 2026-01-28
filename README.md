@@ -1,73 +1,73 @@
-# React + TypeScript + Vite
+# React + TypeScript + Vite + Tanstack Router + Material UI template
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, opinionated React template with Material-UI, TanStack Router, and TypeScript. Built for developers who want to start building features immediately without spending time on initial setup and configuration.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This template provides a production-ready foundation with:
+
+- **React 19** - Latest React with StrictMode enabled
+- **TypeScript** - Strict mode with comprehensive type checking
+- **Material-UI v7** - Complete UI component library with Emotion styling
+- **TanStack Router** - Type-safe routing with file-based organization
+- **Vite** - Lightning-fast dev server using experimental Rolldown bundler
+- **Absolute Imports** - Clean imports from `src` root (no `../../../` paths)
+- **ESLint + Prettier** - Consistent code style and formatting
+- **Pre-configured Theme** - Customizable Material-UI theme setup
+
+### Opinionated Choices
+
+This template makes specific architectural decisions to promote consistency and best practices:
+
+- **Folder structure** - Organized by feature type (`components/`, `hooks/`, `api/`, `config/`, etc.)
+- **Absolute imports** - All imports use `src` as base path
+- **Single quotes, no semicolons** - Prettier formatting rules
+- **Functional components only** - Modern React patterns with hooks
+- **MUI `sx` prop** - Component-scoped styling instead of separate CSS files
+- **Flat ESLint config** - Using ESLint 9+ configuration format
+
+## Getting Started
+
+```bash
+npm install
+npm start
+```
+
+Visit `http://localhost:3000` to see the template in action.
+
+## Adding Routes (TanStack Router)
+
+When creating a new route:
+
+1. Create a route file in `src/routes/` (e.g., `mypage.tsx`)
+2. Export a route using `createRoute`:
+
+   ```tsx
+   import { createRoute } from '@tanstack/react-router'
+   import { RootRoute } from './__root'
+   import MyComponent from 'components/MyComponent'
+
+   export const myPageRoute = createRoute({
+     getParentRoute: () => RootRoute,
+     path: '/mypage',
+     component: MyComponent,
+   })
+   ```
+
+3. **CRITICAL**: Register the route in `src/routes/router.tsx`:
+
+   ```tsx
+   import { myPageRoute } from 'routes/mypage'
+
+   const routeTree = RootRoute.addChildren([
+     Route,
+     aboutRoute,
+     myPageRoute, // Add your new route here
+   ])
+   ```
+
+Failing to register routes in the `routeTree` breaks TypeScript type inference and autocompletion for links and navigation.
 
 ## React Compiler
 
 The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
