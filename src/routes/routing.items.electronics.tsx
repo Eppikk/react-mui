@@ -1,82 +1,172 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { Box, Grid, Card, CardContent, CardMedia, Typography } from '@mui/material'
+import { createFileRoute, Await, defer } from '@tanstack/react-router'
+import {
+  Box,
+  Grid,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Skeleton,
+  CircularProgress,
+} from '@mui/material'
+import { Suspense } from 'react'
 
-const items = [
-  {
-    id: 1,
-    title: 'Laptop Pro 15',
-    description: 'High-performance laptop with 16GB RAM',
-    price: '$1,299',
-    image: 'https://via.placeholder.com/300x200/1976d2/ffffff?text=Laptop',
-  },
-  {
-    id: 2,
-    title: 'Smartphone X',
-    description: 'Latest smartphone with 5G support',
-    price: '$899',
-    image: 'https://via.placeholder.com/300x200/1976d2/ffffff?text=Phone',
-  },
-  {
-    id: 3,
-    title: 'Wireless Earbuds',
-    description: 'Noise-cancelling wireless earbuds',
-    price: '$199',
-    image: 'https://via.placeholder.com/300x200/1976d2/ffffff?text=Earbuds',
-  },
-]
+interface ElectronicsItem {
+  id: number
+  title: string
+  description: string
+  price: string
+  image: string
+}
+
+// Simulated API fetch function - slow response
+const fetchElectronics = async (): Promise<ElectronicsItem[]> => {
+  // Simulate slow network delay
+  await new Promise(resolve => setTimeout(resolve, 2000))
+
+  return [
+    {
+      id: 1,
+      title: 'Laptop Pro 15',
+      description: 'High-performance laptop with 16GB RAM',
+      price: '$1,299',
+      image: 'https://via.placeholder.com/300x200/1976d2/ffffff?text=Laptop',
+    },
+    {
+      id: 2,
+      title: 'Smartphone X',
+      description: 'Latest smartphone with 5G support',
+      price: '$899',
+      image: 'https://via.placeholder.com/300x200/1976d2/ffffff?text=Phone',
+    },
+    {
+      id: 3,
+      title: 'Wireless Earbuds',
+      description: 'Noise-cancelling wireless earbuds',
+      price: '$199',
+      image: 'https://via.placeholder.com/300x200/1976d2/ffffff?text=Earbuds',
+    },
+  ]
+}
+
+function ItemSkeleton() {
+  return (
+    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Skeleton variant="rectangular" height={200} />
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Skeleton variant="text" sx={{ fontSize: '1.5rem', mb: 1 }} />
+        <Skeleton variant="text" sx={{ mb: 2 }} />
+        <Skeleton variant="text" width="40%" sx={{ fontSize: '1.5rem' }} />
+      </CardContent>
+    </Card>
+  )
+}
+
+function ItemsGrid({ items }: { items: ElectronicsItem[] }) {
+  return (
+    <Grid container spacing={3}>
+      {items.map(item => (
+        <Grid size={{ xs: 12, sm: 6, md: 4 }} key={item.id}>
+          <Card
+            sx={{
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              '&:hover': {
+                transform: 'translateY(-4px)',
+                boxShadow: 4,
+              },
+            }}
+          >
+            <CardMedia
+              component="img"
+              height="200"
+              image={item.image}
+              alt={item.title}
+              sx={{ objectFit: 'cover' }}
+            />
+            <CardContent sx={{ flexGrow: 1 }}>
+              <Typography variant="h6" component="div" sx={{ mb: 1 }}>
+                {item.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                {item.description}
+              </Typography>
+              <Typography variant="h5" color="primary" sx={{ fontWeight: 600, mt: 'auto' }}>
+                {item.price}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
+  )
+}
 
 function Electronics() {
+  const { deferredItems } = Route.useLoaderData()
+
   return (
     <Box>
       <Typography variant="h4" sx={{ mb: 1, fontWeight: 600 }}>
         Electronics
       </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-        Browse {items.length} items in this category
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+        Browse our electronics collection
       </Typography>
 
-      <Grid container spacing={3}>
-        {items.map(item => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={item.id}>
-            <Card
-              sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: 4,
-                },
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="200"
-                image={item.image}
-                alt={item.title}
-                sx={{ objectFit: 'cover' }}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="h6" component="div" sx={{ mb: 1 }}>
-                  {item.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  {item.description}
-                </Typography>
-                <Typography variant="h5" color="primary" sx={{ fontWeight: 600, mt: 'auto' }}>
-                  {item.price}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      <Box
+        sx={{
+          mb: 3,
+          p: 2,
+          bgcolor: 'warning.50',
+          borderRadius: 1,
+          border: '1px solid',
+          borderColor: 'warning.200',
+        }}
+      >
+        <Typography variant="subtitle2" color="warning.main" sx={{ fontWeight: 600, mb: 0.5 }}>
+          Pattern: Deferred Loading with defer() + Await
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          The route <code>loader</code> returns immediately using <code>defer()</code>, allowing the
+          page shell to render instantly. The <code>Await</code> component with{' '}
+          <code>Suspense</code> streams in data when ready. Best for slow or non-critical data where
+          fast navigation is prioritized.
+        </Typography>
+      </Box>
+
+      {/* Await handles the deferred promise with Suspense fallback */}
+      <Suspense
+        fallback={
+          <Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+              <CircularProgress size={20} />
+              <Typography color="text.secondary">Loading electronics...</Typography>
+            </Box>
+            <Grid container spacing={3}>
+              {[1, 2, 3].map(n => (
+                <Grid size={{ xs: 12, sm: 6, md: 4 }} key={n}>
+                  <ItemSkeleton />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        }
+      >
+        <Await promise={deferredItems}>{items => <ItemsGrid items={items} />}</Await>
+      </Suspense>
     </Box>
   )
 }
 
 export const Route = createFileRoute('/routing/items/electronics')({
+  // Loader returns immediately with a deferred promise
+  // The route renders without waiting for data to load
+  loader: () => ({
+    deferredItems: defer(fetchElectronics()),
+  }),
   component: Electronics,
 })
 

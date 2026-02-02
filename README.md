@@ -10,6 +10,8 @@ This template provides a production-ready foundation with:
 - **TypeScript** - Strict mode with comprehensive type checking
 - **Material-UI v7** - Complete UI component library with Emotion styling
 - **TanStack Router** - Type-safe routing with file-based organization
+- **TanStack Form** - Headless form management with built-in validation
+- **TanStack Query** - Powerful data fetching and caching
 - **Vite** - Lightning-fast dev server using experimental Rolldown bundler
 - **Absolute Imports** - Clean imports from `src` root (no `../../../` paths)
 - **ESLint + Prettier** - Consistent code style and formatting
