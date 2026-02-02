@@ -35,38 +35,36 @@ npm start
 
 Visit `http://localhost:3000` to see the template in action.
 
-## Adding Routes (TanStack Router)
+## Adding Routes (TanStack Router - File-Based)
 
-When creating a new route:
+This template uses **file-based routing** with automatic route generation:
 
-1. Create a route file in `src/routes/` (e.g., `mypage.tsx`)
-2. Export a route using `createRoute`:
+1. Create a route file in `src/routes/` (e.g., `my-page.tsx`)
+2. Export the route using `createFileRoute`:
 
    ```tsx
-   import { createRoute } from '@tanstack/react-router'
-   import { RootRoute } from './__root'
+   import { createFileRoute } from '@tanstack/react-router'
    import MyComponent from 'components/MyComponent'
 
-   export const myPageRoute = createRoute({
-     getParentRoute: () => RootRoute,
-     path: '/mypage',
+   export const Route = createFileRoute('/my-page')({
      component: MyComponent,
    })
    ```
 
-3. **CRITICAL**: Register the route in `src/routes/router.tsx`:
+3. The route is **automatically registered** - no manual setup needed!
 
-   ```tsx
-   import { myPageRoute } from 'routes/mypage'
+**File naming conventions:**
 
-   const routeTree = RootRoute.addChildren([
-     Route,
-     aboutRoute,
-     myPageRoute, // Add your new route here
-   ])
-   ```
+- `src/routes/index.tsx` → `/`
+- `src/routes/about.tsx` → `/about`
+- `src/routes/my-page.tsx` → `/my-page`
+- `src/routes/__root.tsx` → Root layout wrapper
 
-Failing to register routes in the `routeTree` breaks TypeScript type inference and autocompletion for links and navigation.
+**Why file-based routing?**
+
+- No manual route tree management
+- Automatic type generation
+- Better developer experience with less boilerplate
 
 ## React Compiler
 

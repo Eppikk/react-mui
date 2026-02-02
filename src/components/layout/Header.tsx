@@ -1,9 +1,29 @@
-import { AppBar, Toolbar, Box, Button, Typography, IconButton, Menu, MenuItem } from '@mui/material'
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  Button,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
+  Avatar,
+  Divider,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import { Link } from '@tanstack/react-router'
+import PersonIcon from '@mui/icons-material/Person'
+import SettingsIcon from '@mui/icons-material/Settings'
+import LogoutIcon from '@mui/icons-material/Logout'
+import LoginIcon from '@mui/icons-material/Login'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
+import { useAuth } from 'auth'
 
 export default function Header() {
+  const { isAuthenticated, user, logout } = useAuth()
+  const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -13,6 +33,26 @@ export default function Header() {
 
   const handleMenuClose = () => {
     setAnchorEl(null)
+  }
+
+  const handleLogout = () => {
+    logout()
+    handleMenuClose()
+    navigate({ to: '/' })
+  }
+
+  const handleLogin = () => {
+    handleMenuClose()
+    navigate({ to: '/login' })
+  }
+
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2)
   }
 
   return (
@@ -27,7 +67,7 @@ export default function Header() {
 
         <Box sx={{ display: 'flex', gap: 1, ml: 4 }}>
           <Link to="/" style={{ textDecoration: 'none' }}>
-            {({ isActive }) => (
+            {({ isActive }: { isActive: boolean }) => (
               <Button
                 color="inherit"
                 sx={{
@@ -39,8 +79,21 @@ export default function Header() {
               </Button>
             )}
           </Link>
+          <Link to="/routing/items" style={{ textDecoration: 'none' }}>
+            {({ isActive }: { isActive: boolean }) => (
+              <Button
+                color="inherit"
+                sx={{
+                  fontWeight: isActive ? 600 : 400,
+                  color: isActive ? 'primary.main' : 'text.primary',
+                }}
+              >
+                Routing
+              </Button>
+            )}
+          </Link>
           <Link to="/form" style={{ textDecoration: 'none' }}>
-            {({ isActive }) => (
+            {({ isActive }: { isActive: boolean }) => (
               <Button
                 color="inherit"
                 sx={{
@@ -49,19 +102,6 @@ export default function Header() {
                 }}
               >
                 Form
-              </Button>
-            )}
-          </Link>
-          <Link to="/about" style={{ textDecoration: 'none' }}>
-            {({ isActive }) => (
-              <Button
-                color="inherit"
-                sx={{
-                  fontWeight: isActive ? 600 : 400,
-                  color: isActive ? 'primary.main' : 'text.primary',
-                }}
-              >
-                About
               </Button>
             )}
           </Link>
@@ -76,7 +116,21 @@ export default function Header() {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
         >
-          <AccountCircleIcon />
+          {isAuthenticated && user ? (
+            <Avatar
+              sx={{
+                width: 36,
+                height: 36,
+                bgcolor: 'primary.main',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+              }}
+            >
+              {getInitials(user.name)}
+            </Avatar>
+          ) : (
+            <AccountCircleIcon />
+          )}
         </IconButton>
 
         <Menu
@@ -87,10 +141,51 @@ export default function Header() {
           MenuListProps={{
             'aria-labelledby': 'user-button',
           }}
+          slotProps={{
+            paper: {
+              sx: { minWidth: 200 },
+            },
+          }}
         >
-          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+          {isAuthenticated && user ? (
+            <>
+              <Box sx={{ px: 2, py: 1.5 }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                  {user.name}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {user.email}
+                </Typography>
+              </Box>
+              <Divider />
+              <MenuItem onClick={handleMenuClose}>
+                <ListItemIcon>
+                  <PersonIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Profile</ListItemText>
+              </MenuItem>
+              <MenuItem onClick={handleMenuClose}>
+                <ListItemIcon>
+                  <SettingsIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Settings</ListItemText>
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={handleLogout}>
+                <ListItemIcon>
+                  <LogoutIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Logout</ListItemText>
+              </MenuItem>
+            </>
+          ) : (
+            <MenuItem onClick={handleLogin}>
+              <ListItemIcon>
+                <LoginIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Login</ListItemText>
+            </MenuItem>
+          )}
         </Menu>
       </Toolbar>
     </AppBar>

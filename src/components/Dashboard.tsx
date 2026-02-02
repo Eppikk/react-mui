@@ -8,8 +8,15 @@ import { Link } from '@tanstack/react-router'
 export default function Dashboard() {
   const features = [
     {
+      title: 'Routing',
+      description: 'See an example of nested routes and navigation',
+      icon: <RouterIcon sx={{ fontSize: 40 }} />,
+      color: '#2e7d32',
+      link: '/routing/items',
+    },
+    {
       title: 'Form Components',
-      description: 'Pre-built form templates with validation',
+      description: 'See an example of form validation',
       icon: <FormIcon sx={{ fontSize: 40 }} />,
       color: '#1976d2',
       link: '/form',
@@ -19,12 +26,6 @@ export default function Dashboard() {
       description: 'Material-UI theme configuration',
       icon: <ThemeIcon sx={{ fontSize: 40 }} />,
       color: '#9c27b0',
-    },
-    {
-      title: 'Routing',
-      description: 'TanStack Router with type safety',
-      icon: <RouterIcon sx={{ fontSize: 40 }} />,
-      color: '#2e7d32',
     },
     {
       title: 'TypeScript',
@@ -101,7 +102,7 @@ export default function Dashboard() {
             </Typography>
             <Typography variant="body2" color="text.secondary" paragraph>
               This template includes absolute imports, MUI theming, TanStack Router, and more. Click
-              on the Form Components card above to see an example form template.
+              on the cards above to see examples of routing and form components.
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Check the README for development commands and architecture guidelines.

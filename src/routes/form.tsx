@@ -1,11 +1,8 @@
-import { createRoute } from '@tanstack/react-router'
-import { RootRoute } from './__root'
+import { createFileRoute } from '@tanstack/react-router'
 import FormTemplate from 'components/FormTemplate'
 
-export const formTemplateRoute = createRoute({
-  getParentRoute: () => RootRoute,
-  path: '/form',
+export const Route = createFileRoute('/form')({
   component: FormTemplate,
 })
 
-export default formTemplateRoute
+export default Route
