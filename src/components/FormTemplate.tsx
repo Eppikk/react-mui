@@ -11,25 +11,13 @@ import {
   Alert,
 } from '@mui/material'
 import { useForm } from '@tanstack/react-form'
-import type { AnyFieldApi } from '@tanstack/react-form'
+import FieldInfo from 'components/forms/FieldInfo'
 
 interface FormData {
   fullName: string
   email: string
   country: string
   message: string
-}
-
-function FieldInfo({ field }: { field: AnyFieldApi }) {
-  return (
-    <>
-      {field.state.meta.isTouched && field.state.meta.errors.length ? (
-        <Typography variant="caption" color="error" sx={{ mt: 0.5, display: 'block' }}>
-          {field.state.meta.errors.join(', ')}
-        </Typography>
-      ) : null}
-    </>
-  )
 }
 
 const defaultValues: FormData = {

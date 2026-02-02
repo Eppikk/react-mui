@@ -10,8 +10,6 @@ interface RouterContext {
 }
 
 const RootLayout = () => {
-  // const { auth } = Route.useRouteContext()
-
   return (
     <>
       <Header />
