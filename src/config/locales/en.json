@@ -1,0 +1,96 @@
+{
+  "common": {
+    "appName": "React MUI Template",
+    "loading": "Loading...",
+    "error": "Error",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "reset": "Reset",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "search": "Search",
+    "noResults": "No results found",
+    "language": "Language"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "form": "Form",
+    "routing": "Routing",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "signInToAccount": "Sign in to your account",
+    "signingIn": "Signing in...",
+    "loginDemo": "Demo: Use any email and password to login",
+    "emailRequired": "Email is required",
+    "invalidEmail": "Please enter a valid email address",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least 6 characters"
+  },
+  "home": {
+    "welcome": "Welcome",
+    "title": "React + MUI Template",
+    "subtitle": "A modern, production-ready foundation for building React applications",
+    "getStarted": "Get Started",
+    "viewDocs": "View Documentation"
+  },
+  "form": {
+    "title": "Form Template",
+    "description": "Example form with TanStack Form for type-safe form handling",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "fullNameRequired": "Full name is required",
+    "fullNameMinLength": "Name must be at least 2 characters",
+    "emailAddress": "Email Address",
+    "emailPlaceholder": "your.email@example.com",
+    "country": "Country",
+    "selectCountry": "Select a country",
+    "countryRequired": "Please select a country",
+    "message": "Message",
+    "messagePlaceholder": "Enter your message here...",
+    "messageRequired": "Message is required",
+    "messageMinLength": "Message must be at least 10 characters",
+    "submitting": "Submitting...",
+    "submitSuccess": "Form submitted successfully!",
+    "formInfo": "This form uses TanStack Form for type-safe validation and state management. Try submitting invalid data to see validation in action."
+  },
+  "countries": {
+    "us": "United States",
+    "uk": "United Kingdom",
+    "ca": "Canada",
+    "au": "Australia",
+    "fi": "Finland"
+  },
+  "routing": {
+    "title": "Routing Example",
+    "description": "Explore different routing patterns",
+    "items": "Items",
+    "books": "Books",
+    "clothing": "Clothing",
+    "electronics": "Electronics",
+    "gaming": "Gaming",
+    "browseItems": "Browse {{count}} items in this category"
+  },
+  "patterns": {
+    "useQuery": {
+      "title": "Pattern: useQuery (Component-Level Loading)",
+      "description": "Data fetching is handled in the component using useQuery. The component manually manages loading, error, and success states. Good for optional data or when you need fine-grained control over loading UI."
+    },
+    "loader": {
+      "title": "Pattern: Router Loader + useSuspenseQuery (Blocking)",
+      "description": "Data is pre-fetched in the route loader using queryClient.ensureQueryData(). The route blocks navigation until data loads. Component uses useSuspenseQuery for guaranteed data availability. Best for critical data that must be present before render."
+    },
+    "deferred": {
+      "title": "Pattern: Deferred Loading with defer() + Await",
+      "description": "The route loader returns immediately using defer(), allowing the page shell to render instantly. The Await component with Suspense streams in data when ready. Best for slow or non-critical data where fast navigation is prioritized."
+    }
+  }
+}

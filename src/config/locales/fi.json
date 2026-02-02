@@ -1,0 +1,96 @@
+{
+  "common": {
+    "appName": "React MUI -malli",
+    "loading": "Ladataan...",
+    "error": "Virhe",
+    "submit": "Lähetä",
+    "cancel": "Peruuta",
+    "reset": "Tyhjennä",
+    "save": "Tallenna",
+    "delete": "Poista",
+    "edit": "Muokkaa",
+    "close": "Sulje",
+    "search": "Haku",
+    "noResults": "Ei tuloksia",
+    "language": "Kieli"
+  },
+  "nav": {
+    "home": "Etusivu",
+    "dashboard": "Kojelauta",
+    "form": "Lomake",
+    "routing": "Reititys",
+    "login": "Kirjaudu",
+    "logout": "Kirjaudu ulos"
+  },
+  "auth": {
+    "signIn": "Kirjaudu sisään",
+    "signOut": "Kirjaudu ulos",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "signInToAccount": "Kirjaudu tilillesi",
+    "signingIn": "Kirjaudutaan...",
+    "loginDemo": "Demo: Käytä mitä tahansa sähköpostia ja salasanaa kirjautuaksesi",
+    "emailRequired": "Sähköposti on pakollinen",
+    "invalidEmail": "Anna kelvollinen sähköpostiosoite",
+    "passwordRequired": "Salasana on pakollinen",
+    "passwordMinLength": "Salasanan on oltava vähintään 6 merkkiä"
+  },
+  "home": {
+    "welcome": "Tervetuloa",
+    "title": "React + MUI -malli",
+    "subtitle": "Moderni, tuotantovalmis pohja React-sovellusten rakentamiseen",
+    "getStarted": "Aloita",
+    "viewDocs": "Katso dokumentaatio"
+  },
+  "form": {
+    "title": "Lomakenäkymä",
+    "description": "Esimerkkilomake TanStack Formilla tyyppiturvalliseen lomakkeiden käsittelyyn",
+    "fullName": "Koko nimi",
+    "fullNamePlaceholder": "Kirjoita koko nimesi",
+    "fullNameRequired": "Koko nimi on pakollinen",
+    "fullNameMinLength": "Nimen on oltava vähintään 2 merkkiä",
+    "emailAddress": "Sähköpostiosoite",
+    "emailPlaceholder": "nimi@esimerkki.fi",
+    "country": "Maa",
+    "selectCountry": "Valitse maa",
+    "countryRequired": "Valitse maa",
+    "message": "Viesti",
+    "messagePlaceholder": "Kirjoita viestisi tähän...",
+    "messageRequired": "Viesti on pakollinen",
+    "messageMinLength": "Viestin on oltava vähintään 10 merkkiä",
+    "submitting": "Lähetetään...",
+    "submitSuccess": "Lomake lähetetty onnistuneesti!",
+    "formInfo": "Tämä lomake käyttää TanStack Formia tyyppiturvalliseen validointiin ja tilan hallintaan. Kokeile lähettää virheellisiä tietoja nähdäksesi validoinnin toiminnassa."
+  },
+  "countries": {
+    "us": "Yhdysvallat",
+    "uk": "Iso-Britannia",
+    "ca": "Kanada",
+    "au": "Australia",
+    "fi": "Suomi"
+  },
+  "routing": {
+    "title": "Reititysesimerkki",
+    "description": "Tutustu erilaisiin reititysmalleihin",
+    "items": "Tuotteet",
+    "books": "Kirjat",
+    "clothing": "Vaatteet",
+    "electronics": "Elektroniikka",
+    "gaming": "Pelit",
+    "browseItems": "Selaa {{count}} tuotetta tässä kategoriassa"
+  },
+  "patterns": {
+    "useQuery": {
+      "title": "Malli: useQuery (Komponenttitason lataus)",
+      "description": "Tietojen haku tapahtuu komponentissa useQuery-hookilla. Komponentti hallitsee manuaalisesti lataus-, virhe- ja onnistumistiloja. Hyvä valinnaiselle datalle tai kun tarvitset tarkkaa kontrollia latausnäkymään."
+    },
+    "loader": {
+      "title": "Malli: Reitin loader + useSuspenseQuery (Estävä)",
+      "description": "Data haetaan etukäteen reitin loaderissa queryClient.ensureQueryData()-metodilla. Reitti estää navigoinnin kunnes data on ladattu. Komponentti käyttää useSuspenseQuery-hookia taattuun datan saatavuuteen. Paras kriittiselle datalle, jonka on oltava saatavilla ennen renderöintiä."
+    },
+    "deferred": {
+      "title": "Malli: Viivästetty lataus defer() + Await",
+      "description": "Reitin loader palaa välittömästi defer()-metodilla, jolloin sivun runko renderöityy heti. Await-komponentti Suspensen kanssa lataa datan valmiiksi kun se on saatavilla. Paras hitaalle tai ei-kriittiselle datalle, kun nopea navigointi on etusijalla."
+    }
+  }
+}

@@ -19,10 +19,14 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import LoginIcon from '@mui/icons-material/Login'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from 'auth'
+import LanguageSwitcher from 'components/common/LanguageSwitcher'
 
 export default function Header() {
   const { isAuthenticated, user, logout } = useAuth()
+
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -43,7 +47,7 @@ export default function Header() {
 
   const handleLogin = () => {
     handleMenuClose()
-    navigate({ to: '/login' })
+    navigate({ to: '/login', search: { redirect: '/' } })
   }
 
   const getInitials = (name: string) => {
@@ -75,7 +79,7 @@ export default function Header() {
                   color: isActive ? 'primary.main' : 'text.primary',
                 }}
               >
-                Home
+                {t('nav.home')}
               </Button>
             )}
           </Link>
@@ -88,7 +92,7 @@ export default function Header() {
                   color: isActive ? 'primary.main' : 'text.primary',
                 }}
               >
-                Routing
+                {t('nav.routing')}
               </Button>
             )}
           </Link>
@@ -101,13 +105,15 @@ export default function Header() {
                   color: isActive ? 'primary.main' : 'text.primary',
                 }}
               >
-                Form
+                {t('nav.form')}
               </Button>
             )}
           </Link>
         </Box>
 
         <Box sx={{ flexGrow: 1 }} />
+
+        <LanguageSwitcher />
 
         <IconButton
           color="inherit"
