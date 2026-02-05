@@ -23,10 +23,9 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   // Initialize with existing token if available
-  const token = localStorage.getItem('auth_token')
   const [user, setUser] = useState<User | null>(null)
-  const [isAuthenticated, setIsAuthenticated] = useState(!!token)
-  const [isLoading, setIsLoading] = useState(!!token) // Only loading if we have a token to verify
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   // Check for existing token on mount
   useEffect(() => {
@@ -46,9 +45,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setIsLoading(false)
     }
 
-    if (token) {
-      initAuth()
-    }
+    initAuth()
   }, [])
 
   const login = async (email: string, password: string) => {
