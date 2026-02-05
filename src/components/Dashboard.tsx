@@ -8,6 +8,13 @@ import { Link } from '@tanstack/react-router'
 export default function Dashboard() {
   const features = [
     {
+      title: 'Tech Stack',
+      description: 'View all technologies used in this project',
+      icon: <CodeIcon sx={{ fontSize: 40 }} />,
+      color: '#ed6c02',
+      link: '/tech-stack',
+    },
+    {
       title: 'Routing',
       description: 'See an example of nested routes and navigation',
       icon: <RouterIcon sx={{ fontSize: 40 }} />,
@@ -20,18 +27,6 @@ export default function Dashboard() {
       icon: <FormIcon sx={{ fontSize: 40 }} />,
       color: '#1976d2',
       link: '/form',
-    },
-    {
-      title: 'Custom Theme',
-      description: 'Material-UI theme configuration',
-      icon: <ThemeIcon sx={{ fontSize: 40 }} />,
-      color: '#9c27b0',
-    },
-    {
-      title: 'TypeScript',
-      description: 'Strict TypeScript configuration',
-      icon: <CodeIcon sx={{ fontSize: 40 }} />,
-      color: '#ed6c02',
     },
   ]
 

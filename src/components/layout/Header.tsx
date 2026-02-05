@@ -109,6 +109,19 @@ export default function Header() {
               </Button>
             )}
           </Link>
+          <Link to="/tech-stack" style={{ textDecoration: 'none' }}>
+            {({ isActive }: { isActive: boolean }) => (
+              <Button
+                color="inherit"
+                sx={{
+                  fontWeight: isActive ? 600 : 400,
+                  color: isActive ? 'primary.main' : 'text.primary',
+                }}
+              >
+                Tech Stack
+              </Button>
+            )}
+          </Link>
         </Box>
 
         <Box sx={{ flexGrow: 1 }} />

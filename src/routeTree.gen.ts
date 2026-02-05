@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TechStackRouteImport } from './routes/tech-stack'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as FormRouteImport } from './routes/form'
 import { Route as IndexRouteImport } from './routes/index'
@@ -19,6 +20,11 @@ import { Route as RoutingItemsElectronicsRouteImport } from './routes/routing.it
 import { Route as RoutingItemsClothingRouteImport } from './routes/routing.items.clothing'
 import { Route as RoutingItemsBooksRouteImport } from './routes/routing.items.books'
 
+const TechStackRoute = TechStackRouteImport.update({
+  id: '/tech-stack',
+  path: '/tech-stack',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/form': typeof FormRoute
   '/login': typeof LoginRoute
+  '/tech-stack': typeof TechStackRoute
   '/routing/items': typeof RoutingItemsRouteWithChildren
   '/routing/items/books': typeof RoutingItemsBooksRoute
   '/routing/items/clothing': typeof RoutingItemsClothingRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/form': typeof FormRoute
   '/login': typeof LoginRoute
+  '/tech-stack': typeof TechStackRoute
   '/routing/items/books': typeof RoutingItemsBooksRoute
   '/routing/items/clothing': typeof RoutingItemsClothingRoute
   '/routing/items/electronics': typeof RoutingItemsElectronicsRoute
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/form': typeof FormRoute
   '/login': typeof LoginRoute
+  '/tech-stack': typeof TechStackRoute
   '/routing/items': typeof RoutingItemsRouteWithChildren
   '/routing/items/books': typeof RoutingItemsBooksRoute
   '/routing/items/clothing': typeof RoutingItemsClothingRoute
@@ -104,6 +113,7 @@ export interface FileRouteTypes {
     | '/'
     | '/form'
     | '/login'
+    | '/tech-stack'
     | '/routing/items'
     | '/routing/items/books'
     | '/routing/items/clothing'
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
     | '/'
     | '/form'
     | '/login'
+    | '/tech-stack'
     | '/routing/items/books'
     | '/routing/items/clothing'
     | '/routing/items/electronics'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
     | '/'
     | '/form'
     | '/login'
+    | '/tech-stack'
     | '/routing/items'
     | '/routing/items/books'
     | '/routing/items/clothing'
@@ -137,11 +149,19 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FormRoute: typeof FormRoute
   LoginRoute: typeof LoginRoute
+  TechStackRoute: typeof TechStackRoute
   RoutingItemsRoute: typeof RoutingItemsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tech-stack': {
+      id: '/tech-stack'
+      path: '/tech-stack'
+      fullPath: '/tech-stack'
+      preLoaderRoute: typeof TechStackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -232,6 +252,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FormRoute: FormRoute,
   LoginRoute: LoginRoute,
+  TechStackRoute: TechStackRoute,
   RoutingItemsRoute: RoutingItemsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
