@@ -127,9 +127,11 @@ function Electronics() {
 export const Route = createFileRoute('/routing/items/electronics')({
   // Loader returns immediately with a deferred promise
   // The route renders without waiting for data to load
-  loader: () => ({
-    deferredItems: defer(getElectronicsItems()),
-  }),
+  loader: () => {
+    return {
+      deferredItems: getElectronicsItems(), // Return the promise directly, don't await
+    }
+  },
   component: Electronics,
 })
 

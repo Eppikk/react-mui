@@ -82,7 +82,7 @@ export async function getFastGamingItems(): Promise<GamingItem[]> {
  */
 export async function getSlowGamingItems(): Promise<GamingItem[]> {
   // Simulate slow API response
-  await new Promise(resolve => setTimeout(resolve, 2500))
+  await new Promise(resolve => setTimeout(resolve, 4000))
 
   return [
     {

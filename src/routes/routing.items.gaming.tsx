@@ -59,87 +59,105 @@ function Gaming() {
         </Typography>
       </Box>
 
-      <Grid container spacing={3}>
-        {/* Fast items - loaded immediately */}
-        {fastItems.map(item => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={`fast-${item.id}`}>
-            <Card
-              sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: 4,
-                },
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="200"
-                image={item.image}
-                alt={item.title}
-                sx={{ objectFit: 'cover' }}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="h6" component="div" sx={{ mb: 1 }}>
-                  {item.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  {item.description}
-                </Typography>
-                <Typography variant="h5" color="primary" sx={{ fontWeight: 600, mt: 'auto' }}>
-                  {item.price}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+      {/* Fast Items Section */}
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
+          Featured Items
+          <Typography component="span" variant="caption" sx={{ ml: 1, color: 'success.main' }}>
+            (Loaded immediately)
+          </Typography>
+        </Typography>
+        <Grid container spacing={3}>
+          {fastItems.map(item => (
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={`fast-${item.id}`}>
+              <Card
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: 4,
+                  },
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={item.image}
+                  alt={item.title}
+                  sx={{ objectFit: 'cover' }}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography variant="h6" component="div" sx={{ mb: 1 }}>
+                    {item.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    {item.description}
+                  </Typography>
+                  <Typography variant="h5" color="primary" sx={{ fontWeight: 600, mt: 'auto' }}>
+                    {item.price}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
 
-        {/* Slow items - show skeletons while loading */}
-        {slowLoading
-          ? [1, 2, 3].map(n => (
-              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={`skeleton-${n}`}>
-                <ItemSkeleton />
-              </Grid>
-            ))
-          : slowItems.map(item => (
-              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={`slow-${item.id}`}>
-                <Card
-                  sx={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'transform 0.2s, box-shadow 0.2s',
-                    '&:hover': {
-                      transform: 'translateY(-4px)',
-                      boxShadow: 4,
-                    },
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    height="200"
-                    image={item.image}
-                    alt={item.title}
-                    sx={{ objectFit: 'cover' }}
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography variant="h6" component="div" sx={{ mb: 1 }}>
-                      {item.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                      {item.description}
-                    </Typography>
-                    <Typography variant="h5" color="primary" sx={{ fontWeight: 600, mt: 'auto' }}>
-                      {item.price}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-      </Grid>
+      {/* Slow Items Section */}
+      <Box>
+        <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
+          More Gaming Gear
+          <Typography component="span" variant="caption" sx={{ ml: 1, color: 'text.secondary' }}>
+            {slowLoading ? '(Loading...)' : '(Progressive loading)'}
+          </Typography>
+        </Typography>
+        <Grid container spacing={3}>
+          {slowLoading
+            ? [1, 2, 3].map(n => (
+                <Grid size={{ xs: 12, sm: 6, md: 4 }} key={`skeleton-${n}`}>
+                  <ItemSkeleton />
+                </Grid>
+              ))
+            : slowItems.map(item => (
+                <Grid size={{ xs: 12, sm: 6, md: 4 }} key={`slow-${item.id}`}>
+                  <Card
+                    sx={{
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      transition: 'transform 0.2s, box-shadow 0.2s',
+                      '&:hover': {
+                        transform: 'translateY(-4px)',
+                        boxShadow: 4,
+                      },
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image={item.image}
+                      alt={item.title}
+                      sx={{ objectFit: 'cover' }}
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography variant="h6" component="div" sx={{ mb: 1 }}>
+                        {item.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                        {item.description}
+                      </Typography>
+                      <Typography variant="h5" color="primary" sx={{ fontWeight: 600, mt: 'auto' }}>
+                        {item.price}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+        </Grid>
+      </Box>
     </Box>
   )
 }
@@ -162,11 +180,11 @@ export const Route = createFileRoute('/routing/items/gaming')({
    * - Optional data that can load progressively (below the fold, less important)
    */
   loader: async ({ context: { queryClient } }) => {
-    // Await fast items - blocks navigation (300ms delay)
-    await queryClient.ensureQueryData(fastGamingItemsQueryOptions)
-
     // Prefetch slow items - doesn't block navigation (2.5s delay)
     queryClient.prefetchQuery(slowGamingItemsQueryOptions)
+
+    // Await fast items - blocks navigation (300ms delay)
+    await queryClient.ensureQueryData(fastGamingItemsQueryOptions)
   },
   component: Gaming,
 })
