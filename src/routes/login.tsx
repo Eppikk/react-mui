@@ -54,10 +54,10 @@ function Login() {
             )}
 
             <form
-              onSubmit={e => {
+              onSubmit={async e => {
                 e.preventDefault()
                 e.stopPropagation()
-                form.handleSubmit()
+                await form.handleSubmit()
               }}
             >
               <form.Field
