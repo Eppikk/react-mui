@@ -20,8 +20,32 @@ export interface RegisterCredentials {
 /**
  * Authenticate user with email and password
  * Stores the token in localStorage for subsequent requests
+ *
+ * Demo credentials:
+ * Email: demo@example.com
+ * Password: demo123
  */
 export async function login(credentials: LoginCredentials): Promise<LoginResponse> {
+  // Check for demo credentials
+  if (credentials.email === 'demo@example.com' && credentials.password === 'demo123') {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 800))
+
+    const mockToken = 'demo-token-' + Date.now()
+    const mockResponse: LoginResponse = {
+      token: mockToken,
+      user: {
+        id: '1',
+        name: 'Demo User',
+        email: 'demo@example.com',
+      },
+    }
+
+    localStorage.setItem('auth_token', mockToken)
+    return mockResponse
+  }
+
+  // Real API call for production
   const response = await apiClient.post<LoginResponse>('/auth/login', credentials)
 
   // Store token for subsequent requests
@@ -58,6 +82,18 @@ export function logout(): void {
  * Requires authentication token
  */
 export async function getCurrentUser(): Promise<User> {
+  const token = localStorage.getItem('auth_token')
+
+  // Handle demo token
+  if (token?.startsWith('demo-token-')) {
+    await new Promise(resolve => setTimeout(resolve, 300))
+    return {
+      id: '1',
+      name: 'Demo User',
+      email: 'demo@example.com',
+    }
+  }
+
   const response = await apiClient.get<User>('/auth/me')
   return response.data
 }

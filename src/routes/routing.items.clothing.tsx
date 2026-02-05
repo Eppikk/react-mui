@@ -1,49 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Box, Grid, Card, CardContent, CardMedia, Typography } from '@mui/material'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
-
-interface ClothingItem {
-  id: number
-  title: string
-  description: string
-  price: string
-  image: string
-}
-
-// Simulated API fetch function
-const fetchClothing = async (): Promise<ClothingItem[]> => {
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 1000))
-
-  return [
-    {
-      id: 4,
-      title: 'Designer T-Shirt',
-      description: 'Premium cotton t-shirt',
-      price: '$45',
-      image: 'https://via.placeholder.com/300x200/9c27b0/ffffff?text=T-Shirt',
-    },
-    {
-      id: 5,
-      title: 'Denim Jeans',
-      description: 'Classic fit denim jeans',
-      price: '$79',
-      image: 'https://via.placeholder.com/300x200/9c27b0/ffffff?text=Jeans',
-    },
-    {
-      id: 6,
-      title: 'Winter Jacket',
-      description: 'Warm insulated winter jacket',
-      price: '$149',
-      image: 'https://via.placeholder.com/300x200/9c27b0/ffffff?text=Jacket',
-    },
-  ]
-}
+import { getClothingItems, type ClothingItem } from 'api/services/items'
 
 // Query options - can be reused in loader and component
 const clothingQueryOptions = queryOptions({
   queryKey: ['clothing'],
-  queryFn: fetchClothing,
+  queryFn: getClothingItems,
 })
 
 function Clothing() {

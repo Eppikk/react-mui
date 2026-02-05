@@ -22,9 +22,11 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  // Initialize with existing token if available
+  const token = localStorage.getItem('auth_token')
   const [user, setUser] = useState<User | null>(null)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(!!token)
+  const [isLoading, setIsLoading] = useState(!!token) // Only loading if we have a token to verify
 
   // Check for existing token on mount
   useEffect(() => {
@@ -38,12 +40,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
         } catch (error) {
           // Token is invalid, clear it
           localStorage.removeItem('auth_token')
+          setIsAuthenticated(false)
         }
       }
       setIsLoading(false)
     }
 
-    initAuth()
+    if (token) {
+      initAuth()
+    }
   }, [])
 
   const login = async (email: string, password: string) => {
@@ -70,6 +75,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     login,
     logout,
     isLoading,
+  }
+
+  // Don't render children until initial auth check is complete
+  if (isLoading) {
+    return null // Or return a loading spinner component
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

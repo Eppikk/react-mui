@@ -11,45 +11,7 @@ import {
   Skeleton,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-
-interface Book {
-  id: number
-  title: string
-  description: string
-  price: string
-  image: string
-}
-
-// Simulated API fetch function
-const fetchBooks = async (): Promise<Book[]> => {
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 1500))
-
-  // Simulated API response
-  return [
-    {
-      id: 7,
-      title: 'The Design of Everyday Things',
-      description: 'Classic book on design principles',
-      price: '$24',
-      image: 'https://via.placeholder.com/300x200/f57c00/ffffff?text=Design+Book',
-    },
-    {
-      id: 8,
-      title: 'Clean Code',
-      description: 'A handbook of agile software craftsmanship',
-      price: '$32',
-      image: 'https://via.placeholder.com/300x200/f57c00/ffffff?text=Clean+Code',
-    },
-    {
-      id: 9,
-      title: 'Fiction Bestseller',
-      description: 'Award-winning contemporary fiction',
-      price: '$18',
-      image: 'https://via.placeholder.com/300x200/f57c00/ffffff?text=Fiction',
-    },
-  ]
-}
+import { getBooks, type Book } from 'api/services/items'
 
 function BookSkeleton() {
   return (
@@ -72,7 +34,7 @@ function Books() {
     error,
   } = useQuery({
     queryKey: ['books'],
-    queryFn: fetchBooks,
+    queryFn: getBooks,
   })
 
   if (isError) {

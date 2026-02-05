@@ -28,7 +28,7 @@ function Login() {
       setError('')
       try {
         await auth.login(value.email, value.password)
-        await navigate({ to: redirect })
+        await navigate({ to: redirect || '/' })
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Login failed')
       }
@@ -136,9 +136,24 @@ function Login() {
               </form.Subscribe>
             </form>
 
-            <Box sx={{ mt: 3, p: 2, bgcolor: 'grey.100', borderRadius: 1 }}>
-              <Typography variant="caption" color="text.secondary">
-                <strong>Demo:</strong> Use any email and password to login
+            <Box
+              sx={{
+                mt: 3,
+                p: 2,
+                bgcolor: 'info.lighter',
+                borderRadius: 1,
+                border: '1px solid',
+                borderColor: 'info.light',
+              }}
+            >
+              <Typography variant="body2" color="info.dark" sx={{ fontWeight: 500, mb: 0.5 }}>
+                Demo Credentials
+              </Typography>
+              <Typography variant="caption" color="text.secondary" component="div">
+                Email: demo@example.com
+              </Typography>
+              <Typography variant="caption" color="text.secondary" component="div">
+                Password: demo123
               </Typography>
             </Box>
           </CardContent>

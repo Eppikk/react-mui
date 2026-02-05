@@ -10,44 +10,7 @@ import {
   CircularProgress,
 } from '@mui/material'
 import { Suspense } from 'react'
-
-interface ElectronicsItem {
-  id: number
-  title: string
-  description: string
-  price: string
-  image: string
-}
-
-// Simulated API fetch function - slow response
-const fetchElectronics = async (): Promise<ElectronicsItem[]> => {
-  // Simulate slow network delay
-  await new Promise(resolve => setTimeout(resolve, 2000))
-
-  return [
-    {
-      id: 1,
-      title: 'Laptop Pro 15',
-      description: 'High-performance laptop with 16GB RAM',
-      price: '$1,299',
-      image: 'https://via.placeholder.com/300x200/1976d2/ffffff?text=Laptop',
-    },
-    {
-      id: 2,
-      title: 'Smartphone X',
-      description: 'Latest smartphone with 5G support',
-      price: '$899',
-      image: 'https://via.placeholder.com/300x200/1976d2/ffffff?text=Phone',
-    },
-    {
-      id: 3,
-      title: 'Wireless Earbuds',
-      description: 'Noise-cancelling wireless earbuds',
-      price: '$199',
-      image: 'https://via.placeholder.com/300x200/1976d2/ffffff?text=Earbuds',
-    },
-  ]
-}
+import { getElectronicsItems, type ElectronicsItem } from 'api/services/items'
 
 function ItemSkeleton() {
   return (
@@ -165,7 +128,7 @@ export const Route = createFileRoute('/routing/items/electronics')({
   // Loader returns immediately with a deferred promise
   // The route renders without waiting for data to load
   loader: () => ({
-    deferredItems: defer(fetchElectronics()),
+    deferredItems: defer(getElectronicsItems()),
   }),
   component: Electronics,
 })
