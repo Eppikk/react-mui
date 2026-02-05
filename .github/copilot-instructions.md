@@ -68,10 +68,22 @@ import type { User } from 'types/user' // src/types/*
 
 ### React Patterns
 
-- Functional components only (see [src/App.tsx](src/App.tsx))
+- Functional components only
 - Hooks for state management (`useState`, `useEffect`)
 - TSX files use `.tsx` extension explicitly in imports
 - Entry point is [src/main.tsx](src/main.tsx) with `createRoot` API
+- Router configuration in [src/router.tsx](src/router.tsx)
+- Auth context provided by [src/auth/AuthProvider.tsx](src/auth/AuthProvider.tsx)
+
+### Environment Variables
+
+- Environment variables accessed via `import.meta.env.VITE_*`
+- TypeScript types defined in [src/vite-env.d.ts](src/vite-env.d.ts)
+- [.env.development](.env.development) - Development environment config
+- [.env.production](.env.production) - Production environment config
+- [.env.example](.env.example) - Template for required variables
+- Required variables: `VITE_API_URL`, `VITE_APP_NAME`, `VITE_APP_VERSION`
+- Use directly: `const apiUrl = import.meta.env.VITE_API_URL`
 
 ### Routing (TanStack Router - File-Based)
 
@@ -93,10 +105,15 @@ import type { User } from 'types/user' // src/types/*
 
 ```
 src/
-  main.tsx           # Application entry point, renders App with StrictMode
-  App.tsx            # Root component
-  App.css            # Global styles (prefer MUI sx prop for new code)
+  main.tsx           # Application entry point with providers (Theme, Auth, Router, Query)
+  router.tsx         # Router configuration and context
+  routeTree.gen.ts   # Auto-generated route tree (do not edit manually)
   index.css          # CSS reset and base styles
+
+  auth/              # Authentication context and hooks
+    AuthProvider.tsx # Auth context provider with token management
+    useAuth.ts       # Auth hook for consuming auth context
+    types.ts         # Auth-related TypeScript types
 
   components/        # Reusable UI components
     Dashboard.tsx
@@ -114,12 +131,18 @@ src/
     useLocalStorage.ts
     useFetch.ts
 
+  auth/              # Authentication context and state
+    AuthProvider.tsx # Auth provider with login/logout
+    useAuth.ts       # Auth context hook
+    types.ts         # Auth types (User, etc.)
+
   api/               # API client and service layer
-    client.ts        # Base API client configuration (axios/fetch)
+    client.ts        # Axios instance with bearer token interceptor
+    types.ts         # Common API response types
+    index.ts         # Barrel exports for clean imports
     services/        # API service modules
-      auth.ts
-      users.ts
-      products.ts
+      auth.ts        # Login, register, logout, getCurrentUser
+      users.ts       # User CRUD operations
 
   config/            # Configuration files
     theme.ts         # MUI theme configuration
@@ -157,6 +180,14 @@ src/
 - Common/shared components go in `components/common/`
 - Layout components (Header, Sidebar, Footer) go in `components/layout/`
 
+**auth/** - Authentication context and hooks
+
+- `AuthProvider.tsx` - Provides authentication state to the app
+- `useAuth.ts` - Hook to consume auth context
+- Automatically checks for stored token on mount
+- Integrates with API services for login/logout
+- Import: `import { useAuth } from 'auth'`
+
 **hooks/** - Custom React hooks following naming convention
 
 - Prefix with `use`: `useAuth.ts`, `useDebounce.ts`
@@ -175,8 +206,9 @@ src/
 **config/** - Configuration and setup files
 
 - `theme.ts` - MUI theme customization (colors, typography, components)
-- `constants.ts` - App constants (API URLs, feature flags, enums)
-- `env.ts` - Environment variable helpers and validation
+- `i18n.ts` - i18next configuration for internationalization
+- `locales/` - Translation files (en.json, fi.json, etc.)
+- `constants.ts` - App constants (feature flags, enums)
 - Export const objects: `export const theme = createTheme({...})`
 
 **utils/** - Pure utility functions
